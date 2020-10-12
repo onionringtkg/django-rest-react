@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from . import Task
+from .models import Task
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-class UserSerializer(serializers.ModelSerialiser):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'password')
@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerialiser):
         Token.objects.create(user=user)
         return user
 
-class TaskSerializer(serializers.ModelSerialiser):
+class TaskSerializer(serializers.ModelSerializer):
 
     #read_onlyにすると、post通信の際にカラムが不要になる？（要チェック）
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)

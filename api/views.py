@@ -7,12 +7,14 @@ from rest_framework import generics
 from django.contrib.auth.models import User
 from .models import Task
 from rest_framework import viewsets
-from .serialisers import TaskSerializer, UserSerializer
+from .serializers import TaskSerializer, UserSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
+from .ownpermissions import ProfilePsermission
+
+class UserViewsSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serialiser_class = UserSerializer
-    permission_classes = (AllowAny, )
+    serializer_class = UserSerializer
+    permission_classes = (ProfilePsermission, )
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
@@ -22,7 +24,7 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
     def get_objects(self):
         return self.request.user
 
-class TaskViewSet(viewsets.ModelViewSet):
+class TaskViewsSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     authentication_class = (TokenAuthentication,)

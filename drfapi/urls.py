@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from rest_framework.authtoken.veiws import obtain_auth_token
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     #obtain_auth_token：予めdjangoにある、user_idとpasswordを指定すると、そのユーザのトークンが返却される関数
-    path('auth', obtain_auth_token)
+    path('auth/', obtain_auth_token),
 ]
